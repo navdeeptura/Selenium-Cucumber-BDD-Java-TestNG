@@ -41,7 +41,7 @@ public class SeleniumTest {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("navbarDropdownMenuLink")));
         driver.findElement(By.id("navbarDropdownMenuLink")).click();
 
-
+        // test
         By dropdownInDropdownLocation = By.xpath(
                 "//a[@href=\"/dropdown\" and @class=\"dropdown-item\"]");
         wait.until(ExpectedConditions.presenceOfElementLocated(dropdownInDropdownLocation));
