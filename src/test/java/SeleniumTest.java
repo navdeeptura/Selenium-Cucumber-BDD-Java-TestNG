@@ -5,16 +5,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
 
-import java.io.StreamTokenizer;
 import java.time.Duration;
 
 public class SeleniumTest {
 
     public static ChromeOptions options = new ChromeOptions();
     public static WebDriver driver = new ChromeDriver();
+    static{
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+    }
+
     public static WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
     public WebElement waitAndGet(By locator){
@@ -22,8 +23,6 @@ public class SeleniumTest {
                 .until(ExpectedConditions.elementToBeClickable(locator));
     }
 
-
-    @BeforeTest
     public static void Setup(){
 
         options.addArguments("--remote-allow-origins=*");
@@ -34,8 +33,13 @@ public class SeleniumTest {
         driver.get("https://formy-project.herokuapp.com/");
     }
 
-    @Test
-    void browseWebsitePages() throws InterruptedException {
+
+    public static void KillDriver(){
+        driver.quit();
+    }
+
+
+    void browseWebsitePages() {
         driver.findElement(By.xpath("//a[@class='nav-link']")).click();
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("navbarDropdownMenuLink")));
@@ -48,8 +52,7 @@ public class SeleniumTest {
         driver.findElement(dropdownInDropdownLocation).click();
 
         waitAndGet(By.cssSelector("button.btn.btn-primary.dropdown-toggle")).click();
+        driver.findElement(By.cssSelector("button.btn.btn-primary.dropdown-toggle")).click();
 
-        Thread.sleep(10000);
-        driver.quit();
     }
 }
